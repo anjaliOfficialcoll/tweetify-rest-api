@@ -1,0 +1,29 @@
+{
+  "name": "tweetify-rest-api",
+  "version": "1.0.0",
+  "description": "Tweetify is a REST API-driven microblogging platform that supports create, read, update, and delete operations for posts. It is developed using Node.js and Express, uses EJS for server-side views, and demonstrates MVC design, RESTful routing, and database integration.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anjaliOfficialcoll/tweetify-rest-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/anjaliOfficialcoll/tweetify-rest-api/issues"
+  },
+  "homepage": "https://github.com/anjaliOfficialcoll/tweetify-rest-api#readme",
+  "dependencies": {
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "method-override": "^3.0.0",
+    "uuid": "^13.0.0"
+  }
+}

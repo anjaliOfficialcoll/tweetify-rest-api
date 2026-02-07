@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweetify - All Posts</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📱 Tweetify</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="new-post-btn">
+            <a href="/posts/new" class="btn">✨ Create New Post</a>
+        </div>
+
+        <h2>All Posts</h2>
+
+        <% if (posts.length === 0) { %>
+            <p>No posts yet. Be the first to post!</p>
+        <% } else { %>
+            <% posts.slice().reverse().forEach(post => { %>
+                <div class="post-card">
+                    <div class="post-header">
+                        <span class="username">@<%= post.username %></span>
+                        <span class="timestamp"><%= new Date(post.createdAt).toLocaleString() %></span>
+                    </div>
+                    <div class="post-content">
+                        <%= post.content %>
+                    </div>
+                    <div class="post-actions">
+                        <a href="/posts/<%= post.id %>" class="btn btn-secondary">View</a>
+                        <a href="/posts/<%= post.id %>/edit" class="btn btn-secondary">Edit</a>
+                        <form action="/posts/<%= post.id %>?_method=DELETE" method="POST" class="delete-form">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+</body>
+</html>
