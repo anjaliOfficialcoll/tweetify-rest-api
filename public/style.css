@@ -1,0 +1,193 @@
+/* Twitter Clone Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #15202b;
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+h1 {
+    background-color: #1da1f2;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    border-bottom: 1px solid #38444d;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Post Container */
+.div1 {
+    background-color: #192734;
+    border: 1px solid #38444d;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    transition: background-color 0.2s;
+}
+
+.div1:first-of-type {
+    margin-top: 14px;
+}
+
+.div1:hover {
+    background-color: #1c2938;
+}
+
+/* Username Styling */
+.user {
+    color: #1da1f2;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Post Content */
+.content {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.timestamp {
+    color: #8899a6;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+/* Horizontal Rule */
+hr {
+    border: none;
+    border-top: 1px solid #38444d;
+    margin: 15px 0;
+}
+
+/* Links */
+a {
+    color: #1da1f2;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 15px;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #1a8cd8;
+    text-decoration: underline;
+}
+
+/* Buttons */
+button {
+    background-color: #1da1f2;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 6px;
+}
+
+button:hover {
+    background-color: #1a8cd8;
+}
+
+button.delete-btn, form[action*="DELETE"] button {
+    background-color: #f4212e;
+}
+
+button.delete-btn:hover, form[action*="DELETE"] button:hover {
+    background-color: #d01828;
+}
+
+/* Forms */
+form {
+    display: inline-block;
+    margin-top: 6px;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    background-color: #192734;
+    border: 1px solid #38444d;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    margin-bottom: 15px;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #1da1f2;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* New Post Button */
+a[href="/posts/new"] {
+    display: block;
+    background-color: #1da1f2;
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 24px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin: 40px auto 20px;
+    max-width: 200px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.4);
+}
+
+a[href="/posts/new"]:hover {
+    background-color: #1a8cd8;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(29, 161, 242, 0.6);
+}
+
+a[href="/posts/new"]:active {
+    transform: translateY(0);
+}
+
+/* Create Post Section */
+.create-post-section {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid #38444d;
+    margin-top: 20px;
+}
+
+/* Action Buttons Container */
+.actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+

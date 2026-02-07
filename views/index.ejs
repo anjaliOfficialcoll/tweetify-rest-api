@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweetify</title>
+    <link rel="icon" href="/images/logo.png">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>
+        <i class="fa-brands fa-twitter" style="margin-right: 10px;"></i>
+        Tweetify
+    </h1>
+    <% for (const post of posts) { %>
+        <div class="div1">
+            <h2 class="user">@<%= post.username %></h2>
+        <p class="content"><%= post.content %></p>
+        <p class="timestamp"><%= post.createdAt ? new Date(post.createdAt).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short'}) : 'Just now' %></p>
+        <hr>
+        <div class="actions">
+            <a href="/posts/<%= post.id %>">View</a>
+            <a href="/posts/<%= post.id %>/edit">Edit</a>
+            <form method="post" action="/posts/<%=post.id%>?_method=DELETE">
+                <button>Delete</button>
+            </form>
+        </div>
+        
+        </div>
+        
+    <% } %>
+    <div class="create-post-section">
+        <a href="/posts/new">Create New Post</a>
+    </div>
+   
+</body>
+</html>

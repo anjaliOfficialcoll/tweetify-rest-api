@@ -1,0 +1,155 @@
+/* Twitter Clone - Edit Post Page Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #15202b;
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Page Title */
+h1 {
+    background-color: #1da1f2;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 16px 16px 0 0;
+    max-width: 600px;
+    margin: 30px auto 0;
+}
+
+/* Container */
+body > p,
+body > form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Not Found Message */
+body > p:first-of-type {
+    background-color: #192734;
+    border: 1px solid #38444d;
+    border-radius: 0 0 16px 16px;
+    padding: 40px;
+    text-align: center;
+    color: #8899a6;
+    font-size: 16px;
+}
+
+/* Post Info Container */
+p {
+    background-color: #192734;
+    border-left: 1px solid #38444d;
+    border-right: 1px solid #38444d;
+    padding: 15px 40px;
+    color: #8899a6;
+    font-size: 14px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+/* Make Post ID and Username stand out */
+p:nth-of-type(1),
+p:nth-of-type(2) {
+    border-top: 1px solid #38444d;
+}
+
+/* Comments Label */
+body > p:last-of-type {
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: bold;
+    padding-top: 20px;
+    border: none;
+    background: none;
+}
+
+/* Form */
+form {
+    background-color: #192734;
+    border: 1px solid #38444d;
+    border-radius: 0 0 16px 16px;
+    padding: 20px 40px 40px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Textarea */
+textarea {
+    width: 100%;
+    background-color: #253341;
+    border: 2px solid #38444d;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 15px;
+    font-size: 16px;
+    font-family: inherit;
+    min-height: 150px;
+    resize: vertical;
+    transition: border-color 0.3s;
+    margin-bottom: 15px;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #1da1f2;
+    background-color: #192734;
+}
+
+/* Update Button */
+button[type="submit"] {
+    background-color: #1da1f2;
+    color: #ffffff;
+    border: none;
+    border-radius: 24px;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: #1a8cd8;
+}
+
+button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* Remove default br spacing */
+br {
+    display: none;
+}
+
+/* Back Link */
+a {
+    color: #1da1f2;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Card Container Effect */
+h1 + p,
+h1 + p + p,
+h1 + p + p + br,
+h1 + p + p + br + p {
+    margin-top: 0;
+}
