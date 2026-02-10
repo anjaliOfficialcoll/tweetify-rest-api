@@ -82,6 +82,18 @@ app.get("/", (req, res) => {
   }
 });
 
+// 404 Error Handler - Must be after all other routes
+app.use((req, res, next) => {
+  res.status(404).render("404.ejs");
+});
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  req.flash('error', 'Something went wrong!');
+  res.status(500).redirect("/tweets");
+});
+
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
     console.log(`Visit http://localhost:${port}`);

@@ -33,6 +33,20 @@
                 <hr>
                 <div class="actions">
                     <a href="/tweets/<%= post._id %>">View</a>
+                    
+                    <% if (currentUser) { %>
+                        <form method="post" action="/tweets/<%= post._id %>/like" style="display: inline;">
+                            <button type="submit" style="<%= post.likes && post.likes.includes(currentUser._id) ? 'background-color: #e0245e; color: white;' : 'background-color: transparent; color: #e0245e; border: 2px solid #e0245e;' %>">
+                                <i class="<%= post.likes && post.likes.includes(currentUser._id) ? 'fas' : 'far' %> fa-heart"></i>
+                                <%= post.likes ? post.likes.length : 0 %>
+                            </button>
+                        </form>
+                    <% } else { %>
+                        <span style="color: #8899a6; font-size: 14px;">
+                            <i class="far fa-heart"></i> <%= post.likes ? post.likes.length : 0 %>
+                        </span>
+                    <% } %>
+                    
                     <% if (currentUser && post.author && post.author._id.equals(currentUser._id)) { %>
                         <a href="/tweets/<%= post._id %>/edit">Edit</a>
                         <form method="post" action="/tweets/<%= post._id %>?_method=DELETE">

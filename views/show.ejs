@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post in detail</title>
     <link rel="icon" href="/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/css/show.css">
 </head>
 <body>
@@ -28,6 +29,23 @@
                 </div>
                 <div class="user">@<%= post.author ? post.author.username : 'Unknown' %></div>
                 <p class="copy"><%= post.content %></p>
+                
+                <!-- Like section -->
+                <div style="padding: 12px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 10px 0;">
+                    <% if (currentUser) { %>
+                        <form method="post" action="/tweets/<%= post._id %>/like" class="inline-form">
+                            <button type="submit" class="btn <%= post.likes && post.likes.includes(currentUser._id) ? 'primary' : 'ghost' %>" style="padding: 10px 20px;">
+                                <i class="<%= post.likes && post.likes.includes(currentUser._id) ? 'fas' : 'far' %> fa-heart"></i>
+                                <%= post.likes ? post.likes.length : 0 %> <%= post.likes && post.likes.length === 1 ? 'Like' : 'Likes' %>
+                            </button>
+                        </form>
+                    <% } else { %>
+                        <span style="color: var(--muted); font-size: 14px;">
+                            <i class="far fa-heart"></i> <%= post.likes ? post.likes.length : 0 %> <%= post.likes && post.likes.length === 1 ? 'Like' : 'Likes' %>
+                        </span>
+                    <% } %>
+                </div>
+                
                 <div class="actions">
                     <a class="btn primary" href="/tweets">Back</a>
                     <% if (currentUser && post.author && post.author._id.equals(currentUser._id)) { %>
@@ -38,6 +56,59 @@
                     <% } %>
                 </div>
             </article>
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+                <h2 class="comments-title">
+                    <i class="fas fa-comments"></i> 
+                    Comments (<%= comments ? comments.length : 0 %>)
+                </h2>
+
+                <% if (currentUser) { %>
+                    <!-- Add Comment Form -->
+                    <form method="post" action="/tweets/<%= post._id %>/comments" class="comment-form">
+                        <textarea 
+                            name="text" 
+                            placeholder="Write a comment..." 
+                            required
+                            maxlength="280"
+                            rows="3"
+                        ></textarea>
+                        <button type="submit" class="btn primary">
+                            <i class="fas fa-paper-plane"></i> Post Comment
+                        </button>
+                    </form>
+                <% } else { %>
+                    <p class="login-prompt">
+                        <a href="/login">Login</a> to post a comment
+                    </p>
+                <% } %>
+
+                <!-- Comments List -->
+                <div class="comments-list">
+                    <% if (comments && comments.length > 0) { %>
+                        <% comments.forEach(function(comment) { %>
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <span class="comment-author">
+                                        <i class="fas fa-user-circle"></i>
+                                        @<%= comment.author ? comment.author.username : 'Unknown' %>
+                                    </span>
+                                    <span class="comment-time">
+                                        <%= comment.createdAt ? new Date(comment.createdAt).toLocaleString() : '' %>
+                                    </span>
+                                </div>
+                                <p class="comment-text"><%= comment.text %></p>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="no-comments">
+                            <i class="far fa-comment"></i>
+                            No comments yet. Be the first to comment!
+                        </p>
+                    <% } %>
+                </div>
+            </section>
         </main>
     </div>
     

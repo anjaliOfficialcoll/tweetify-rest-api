@@ -6,11 +6,16 @@ const tweetSchema = new mongoose.Schema({
     required: true
   },
 
-  // 🔥 ADD THIS
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
-  }
+  },
+
+  // Likes system
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }]
 
 }, { timestamps: true });
 

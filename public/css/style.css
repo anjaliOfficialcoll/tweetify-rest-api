@@ -191,3 +191,34 @@ a[href="/posts/new"]:active {
     margin-top: 10px;
 }
 
+/* Like Button Styles */
+.actions button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.actions button[type="submit"]:hover {
+    transform: scale(1.05);
+}
+
+.actions button[type="submit"] i {
+    font-size: 16px;
+}
+
+/* Liked state */
+button[type="submit"][style*="background-color: #e0245e"] {
+    animation: likePulse 0.3s ease;
+}
+
+@keyframes likePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+

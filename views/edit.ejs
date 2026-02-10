@@ -19,7 +19,7 @@
         Edit your tweet:
         <br><br>
         <form method="post" action="/tweets/<%= post._id %>">
-            <textarea rows="10" cols="35" name="content"><%= post.content %></textarea><br>
+            <textarea rows="10" cols="35" name="content" required maxlength="280"><%= post.content %></textarea><br>
             <button type="submit">Update Post</button>
         </form>
         <br>
