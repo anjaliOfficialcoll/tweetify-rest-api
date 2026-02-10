@@ -80,7 +80,11 @@ http://localhost:8080
 - **Read Tweets**: View all tweets
 - **Update Tweets**: Edit your own tweets
 - **Delete Tweets**: Remove your tweets
+- **Like Feature**: Like and unlike tweets
+- **Comments**: Add comments to tweets
 - **Session Management**: Secure session handling with MongoDB store
+- **Error Handling**: Comprehensive error handling with flash messages
+- **Invalid Path Handling**: 404 error page for non-existent routes
 
 ## Project Structure
 
