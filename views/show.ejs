@@ -4,14 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post in detail</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/images/logo.png">
+    <link rel="stylesheet" href="/show.css">
 </head>
 <body>
-    <h2>Here is your post in detail</h2>
-    <h3>Post id :<%= post.id %></h3>
-    <div class="div1">
-        <h3 class="user">Username :@<%= post.username %></h3>
-        <p><%= post.content %></p>
+    <div class="page">
+        <header class="header">
+            <a class="back-link" href="/posts">Back to feed</a>
+            <span class="badge">Tweetify</span>
+        </header>
+
+        <main class="content">
+            <section class="hero">
+                <p class="eyebrow">Post in detail</p>
+                <h1>Here is your post</h1>
+                <p class="subhead">Every word, every moment, right where you left it.</p>
+            </section>
+
+            <article class="card">
+                <div class="meta">
+                    <span class="meta-pill">Post #<%= post.id %></span>
+                </div>
+                <div class="user">@<%= post.username %></div>
+                <p class="copy"><%= post.content %></p>
+                <div class="actions">
+                    <a class="btn primary" href="/posts">Back</a>
+                    <a class="btn ghost" href="/posts/<%= post.id %>/edit">Edit</a>
+                </div>
+            </article>
+        </main>
     </div>
     
 </body>
