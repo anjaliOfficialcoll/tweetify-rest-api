@@ -1,6 +1,8 @@
 const express=require("express");
 const app=express();
-const port=8080;
+require('dotenv').config();
+
+const port=process.env.PORT || 8080;
 const path=require("path");
 const session = require("express-session");
 const { MongoStore } = require("connect-mongo");
@@ -16,7 +18,7 @@ const userRoutes = require("./routes/users");
 const tweetRoutes = require("./routes/tweets");
 
 // Connect to MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/tweetify")
+mongoose.connect(process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/tweetify")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -30,11 +32,11 @@ app.use(express.static(path.join(__dirname,"public")));
 
 // Session configuration - MUST come before routes
 app.use(session({
-  secret: "tweetify-secret",
+  secret: process.env.SESSION_SECRET || "tweetify-secret",
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
-    mongoUrl: "mongodb://127.0.0.1:27017/tweetify",
+    mongoUrl: process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/tweetify",
     touchAfter: 24 * 3600
   }),
   cookie: {
