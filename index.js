@@ -2,10 +2,23 @@ const express=require("express");
 const app=express();
 const port=8080;
 const path=require("path");
+const session = require("express-session");
+const { MongoStore } = require("connect-mongo");
+const flash = require("connect-flash");
+const mongoose = require("mongoose");
+const User = require("./models/User");
 
 const { v4: uuidv4 } = require('uuid');
 const methodOverride = require('method-override');
 
+// Import routes
+const userRoutes = require("./routes/users");
+const tweetRoutes = require("./routes/tweets");
+
+// Connect to MongoDB
+mongoose.connect("mongodb://127.0.0.1:27017/tweetify")
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
@@ -15,97 +28,59 @@ app.set("views",path.join(__dirname,"views"));
 
 app.use(express.static(path.join(__dirname,"public")));
 
+// Session configuration - MUST come before routes
+app.use(session({
+  secret: "tweetify-secret",
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: "mongodb://127.0.0.1:27017/tweetify",
+    touchAfter: 24 * 3600
+  }),
+  cookie: {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
+}));
 
-let posts=[
-    {
-        id:uuidv4(),
-        username:"lily",
-        content:"Hello, this is my first post!",
-        createdAt:new Date().toISOString()
-    },
-    {
-        id:uuidv4(),
-        username:"john",
-        content:"Excited to join this platform!",
-        createdAt:new Date().toISOString()
-    },
-    {
-        id:uuidv4(),
-        username:"emma",
-        content:"Looking forward to connecting with everyone!",
-        createdAt:new Date().toISOString()
-    },
-    {
-        id:uuidv4(),
-        username:"michael",
-        content:"Just had a great day!",
-        createdAt:new Date().toISOString()
+// Flash messages middleware
+app.use(flash());
+
+// Middleware to make currentUser and flash messages available in all views
+app.use(async (req, res, next) => {
+  if (req.session.userId) {
+    try {
+      res.locals.currentUser = await User.findById(req.session.userId);
+    } catch (err) {
+      res.locals.currentUser = null;
     }
-];
-
-// app.get("/",(req,res)=>{
-//     res.redirect("/posts");
-// });
-
-app.get("/posts",(req,res)=>{
-    res.render("index.ejs",{posts});
-});
-
-app.get("/posts/new",(req,res)=>{
-    res.render("new.ejs");
-});
-
-app.post("/posts",(req,res)=>{
-    let{username,content}=req.body;
-    console.log("Received POST data:", req.body);
-    let newId=uuidv4();
-    
-    posts.push({id:newId,username,content,createdAt:new Date().toISOString()});
-    console.log("Total posts now:", posts.length);
-    res.redirect("/posts");
-
-});
-
-app.get("/posts/:id",(req,res)=>{
-   let {id}=req.params;
-   let post=posts.find(p=>id===p.id);
-   if(!post){
-      return res.send("Post not found");
-   }
-   res.render("show.ejs",{post});
-
-});
-
-app.post("/posts/:id",(req,res)=>{
-    let {id}=req.params;
-    let newContent=req.body.content;
-    let post=posts.find(p=>id===p.id);
-    if(!post){
-        return res.status(404).send("Post not found");
-    }
-    post.content=newContent;
-    console.log("Updated post:", post);
-    res.redirect("/posts");
+  } else {
+    res.locals.currentUser = null;
+  }
+  
+  // Make flash messages available in all views
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  res.locals.warning = req.flash('warning');
+  
+  next();
 });
 
 
-app.get("/posts/:id/edit",(req,res)=>{
-   let {id}=req.params;
-   let post=posts.find(p=>id===p.id);
-    if(!post){
-        return res.status(404).send("Post not found");
-    }
-  res.render("edit.ejs",{post});
+// Mount routes
+app.use("/", userRoutes);
+app.use("/", tweetRoutes);
 
+// Root route
+app.get("/", (req, res) => {
+  if (req.session.userId) {
+    res.redirect("/tweets");
+  } else {
+    res.redirect("/login");
+  }
 });
 
-
-app.delete("/posts/:id",(req,res)=>{
-    let {id}=req.params;
-    posts=posts.filter(p=>p.id!==id);
-    res.redirect("/posts");
-})
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
-})
-
+    console.log(`Visit http://localhost:${port}`);
+});

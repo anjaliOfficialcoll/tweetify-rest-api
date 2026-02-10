@@ -1,0 +1,148 @@
+<% if (typeof success !== 'undefined' && success && success.length > 0) { %>
+    <% success.forEach(msg => { %>
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <span><%= msg %></span>
+            <button class="alert-close" onclick="this.parentElement.style.display='none'">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    <% }) %>
+<% } %>
+
+<% if (typeof error !== 'undefined' && error && error.length > 0) { %>
+    <% error.forEach(msg => { %>
+        <div class="alert alert-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span><%= msg %></span>
+            <button class="alert-close" onclick="this.parentElement.style.display='none'">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    <% }) %>
+<% } %>
+
+<% if (typeof warning !== 'undefined' && warning && warning.length > 0) { %>
+    <% warning.forEach(msg => { %>
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span><%= msg %></span>
+            <button class="alert-close" onclick="this.parentElement.style.display='none'">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    <% }) %>
+<% } %>
+
+<style>
+.alert {
+    position: relative;
+    padding: 14px 40px 14px 16px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    animation: slideDown 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert i:first-child {
+    font-size: 18px;
+}
+
+.alert span {
+    flex: 1;
+}
+
+.alert-close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.alert-close:hover {
+    opacity: 1;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+/* Dark theme adjustments */
+body {
+    --alert-success-bg: #1e4620;
+    --alert-success-text: #a3d9a5;
+    --alert-error-bg: #4a1a1d;
+    --alert-error-text: #f8a5a5;
+    --alert-warning-bg: #4a3f1d;
+    --alert-warning-text: #f0d36f;
+}
+
+@media (prefers-color-scheme: dark) {
+    .alert-success {
+        background-color: var(--alert-success-bg);
+        color: var(--alert-success-text);
+        border: 1px solid #2d5a2f;
+    }
+
+    .alert-error {
+        background-color: var(--alert-error-bg);
+        color: var(--alert-error-text);
+        border: 1px solid #5f2326;
+    }
+
+    .alert-warning {
+        background-color: var(--alert-warning-bg);
+        color: var(--alert-warning-text);
+        border: 1px solid #5f5229;
+    }
+}
+</style>
+
+<script>
+// Auto-hide alerts after 5 seconds
+setTimeout(() => {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        alert.style.transition = 'opacity 0.5s, transform 0.5s';
+        alert.style.opacity = '0';
+        alert.style.transform = 'translateY(-20px)';
+        setTimeout(() => alert.remove(), 500);
+    });
+}, 5000);
+</script>

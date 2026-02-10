@@ -5,37 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tweetify</title>
     <link rel="icon" href="/images/logo.png">
-
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <%- include('partials/flash') %>
     <h1>
         <i class="fa-brands fa-twitter" style="margin-right: 10px;"></i>
         Tweetify
+        <% if (currentUser) { %>
+            <span style="font-size: 14px; font-weight: normal; float: right; margin-top: 5px;">
+                Welcome, @<%= currentUser.username %>
+                <form method="post" action="/logout" style="display: inline; margin-left: 10px;">
+                    <button type="submit" style="background-color: #f4212e; padding: 8px 16px; font-size: 13px;">Logout</button>
+                </form>
+            </span>
+        <% } %>
     </h1>
-    <% for (const post of posts) { %>
+    
+    <% if (posts && posts.length > 0) { %>
+        <% for (const post of posts) { %>
+            <div class="div1">
+                <h2 class="user">@<%= post.author ? post.author.username : 'Unknown' %></h2>
+                <p class="content"><%= post.content %></p>
+                <p class="timestamp"><%= post.createdAt ? new Date(post.createdAt).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short'}) : 'Just now' %></p>
+                <hr>
+                <div class="actions">
+                    <a href="/tweets/<%= post._id %>">View</a>
+                    <% if (currentUser && post.author && post.author._id.equals(currentUser._id)) { %>
+                        <a href="/tweets/<%= post._id %>/edit">Edit</a>
+                        <form method="post" action="/tweets/<%= post._id %>?_method=DELETE">
+                            <button>Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    <% } else { %>
         <div class="div1">
-            <h2 class="user">@<%= post.username %></h2>
-        <p class="content"><%= post.content %></p>
-        <p class="timestamp"><%= post.createdAt ? new Date(post.createdAt).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short'}) : 'Just now' %></p>
-        <hr>
-        <div class="actions">
-            <a href="/posts/<%= post.id %>">View</a>
-            <a href="/posts/<%= post.id %>/edit">Edit</a>
-            <form method="post" action="/posts/<%=post.id%>?_method=DELETE">
-                <button>Delete</button>
-            </form>
+            <p style="text-align: center; color: #8899a6;">No tweets yet. Be the first to post!</p>
         </div>
-        
-        </div>
-        
     <% } %>
-    <div class="create-post-section">
-        <a href="/posts/new">Create New Post</a>
-    </div>
+    
+    <% if (currentUser) { %>
+        <div class="create-post-section">
+            <a href="/tweets/new">Create New Tweet</a>
+        </div>
+    <% } else { %>
+        <div class="create-post-section">
+            <a href="/login">Login to Tweet</a>
+        </div>
+    <% } %>
    
 </body>
 </html>

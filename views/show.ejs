@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post in detail</title>
     <link rel="icon" href="/images/logo.png">
-    <link rel="stylesheet" href="/show.css">
+    <link rel="stylesheet" href="/css/show.css">
 </head>
 <body>
+    <%- include('partials/flash') %>
     <div class="page">
         <header class="header">
-            <a class="back-link" href="/posts">Back to feed</a>
+            <a class="back-link" href="/tweets">Back to feed</a>
             <span class="badge">Tweetify</span>
         </header>
 
@@ -23,13 +24,18 @@
 
             <article class="card">
                 <div class="meta">
-                    <span class="meta-pill">Post #<%= post.id %></span>
+                    <span class="meta-pill">Post #<%= post._id %></span>
                 </div>
-                <div class="user">@<%= post.username %></div>
+                <div class="user">@<%= post.author ? post.author.username : 'Unknown' %></div>
                 <p class="copy"><%= post.content %></p>
                 <div class="actions">
-                    <a class="btn primary" href="/posts">Back</a>
-                    <a class="btn ghost" href="/posts/<%= post.id %>/edit">Edit</a>
+                    <a class="btn primary" href="/tweets">Back</a>
+                    <% if (currentUser && post.author && post.author._id.equals(currentUser._id)) { %>
+                        <a class="btn ghost" href="/tweets/<%= post._id %>/edit">Edit</a>
+                        <form method="post" action="/tweets/<%= post._id %>?_method=DELETE" class="inline-form">
+                            <button type="submit" class="btn danger">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             </article>
         </main>
