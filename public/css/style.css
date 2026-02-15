@@ -212,8 +212,17 @@ a[href="/posts/new"]:active {
 }
 
 /* Liked state */
-button[type="submit"][style*="background-color: #e0245e"] {
+.actions button.liked {
+    background-color: #e0245e;
+    color: white;
     animation: likePulse 0.3s ease;
+}
+
+/* Unliked state */
+.actions button.unliked {
+    background-color: transparent;
+    color: #e0245e;
+    border: 2px solid #e0245e;
 }
 
 @keyframes likePulse {

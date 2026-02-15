@@ -35,9 +35,10 @@
                     <a href="/tweets/<%= post._id %>">View</a>
                     
                     <% if (currentUser) { %>
+                        <% const isLiked = post.likes && post.likes.some(like => like.toString() === currentUser._id.toString()); %>
                         <form method="post" action="/tweets/<%= post._id %>/like" style="display: inline;">
-                            <button type="submit" style="<%= post.likes && post.likes.includes(currentUser._id) ? 'background-color: #e0245e; color: white;' : 'background-color: transparent; color: #e0245e; border: 2px solid #e0245e;' %>">
-                                <i class="<%= post.likes && post.likes.includes(currentUser._id) ? 'fas' : 'far' %> fa-heart"></i>
+                            <button type="submit" class="<%= isLiked ? 'liked' : 'unliked' %>">
+                                <i class="<%= isLiked ? 'fas' : 'far' %> fa-heart"></i>
                                 <%= post.likes ? post.likes.length : 0 %>
                             </button>
                         </form>
@@ -47,7 +48,7 @@
                         </span>
                     <% } %>
                     
-                    <% if (currentUser && post.author && post.author._id.equals(currentUser._id)) { %>
+                    <% if (currentUser && post.author && post.author._id.toString() === currentUser._id.toString()) { %>
                         <a href="/tweets/<%= post._id %>/edit">Edit</a>
                         <form method="post" action="/tweets/<%= post._id %>?_method=DELETE">
                             <button>Delete</button>
