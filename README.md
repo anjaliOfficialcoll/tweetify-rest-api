@@ -1,6 +1,12 @@
-# tweetify-rest-api
+# Your Repository Title
 
-Tweetify is a REST API-driven microblogging platform that supports create, read, update, and delete operations for posts. It is developed using Node.js and Express, uses EJS for server-side views, and demonstrates MVC design, RESTful routing, and database integration.
+## Description
+
+This is a brief description of your repository.
+
+## Live Demo
+
+🌐 Check out the live application: [https://tweetify-no52.onrender.com/tweets](https://tweetify-no52.onrender.com/tweets)
 
 ## Prerequisites
 
