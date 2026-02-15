@@ -18,9 +18,9 @@ const userRoutes = require("./routes/users");
 const tweetRoutes = require("./routes/tweets");
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/tweetify")
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected ✅"))
+  .catch(err => console.log(err));
 
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
@@ -31,12 +31,18 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.static(path.join(__dirname,"public")));
 
 // Session configuration - MUST come before routes
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+  console.error("ERROR: MONGO_URI environment variable is not set!");
+  process.exit(1);
+}
+
 app.use(session({
   secret: process.env.SESSION_SECRET || "tweetify-secret",
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/tweetify",
+    mongoUrl: mongoUri,
     touchAfter: 24 * 3600
   }),
   cookie: {
